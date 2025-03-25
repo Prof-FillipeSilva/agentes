@@ -8,12 +8,72 @@
 <body>
     <h2>Solicitar Plano de Aula</h2>
     <form id="planoForm">
-        <label for="solicitacao">Digite sua solicitação:</label>
-        <textarea id="solicitacao" name="solicitacao" required></textarea>
+        <label for="disciplina">Nome da disciplina:</label>
+        <input type="text" id="disciplina" name="disciplina" required>
         <br><br>
+
+        <label for="ano">Ano/série:</label>
+        <input type="text" id="ano" name="ano" required>
+        <br><br>
+
+        <label for="segmento">Segmento:</label>
+        <select id="segmento" name="segmento" required>
+            <option value="Ensino Fundamental">Ensino Fundamental</option>
+            <option value="Ensino Médio">Ensino Médio</option>
+            <option value="Ensino Superior">Ensino Superior</option>
+            <option value="Ensino Técnico">Ensino Técnico</option>
+        </select>
+        <br><br>
+
+        <label for="nivel">Nível dos alunos:</label>
+        <select id="nivel" name="nivel" required>
+            <option value="Abaixo do básico">Abaixo do básico</option>
+            <option value="Básico">Básico</option>
+            <option value="Proficiente">Proficiente</option>
+            <option value="Avançado">Avançado</option>
+        </select>
+        <br><br>
+
+        <label for="quantidade">Quantidade de planos de aula:</label>
+        <input type="number" id="quantidade" name="quantidade" min="1" required>
+        <br><br>
+
+        <label for="carga">Carga horária de cada aula:</label>
+        <input type="text" id="carga" name="carga" required>
+        <br><br>
+
+        <label for="formato">Formato da aula:</label>
+        <select id="formato" name="formato" required>
+            <option value="Presencial">Presencial</option>
+            <option value="Online">Online</option>
+            <option value="Híbrido">Híbrido</option>
+        </select>
+        <br><br>
+
+        <label for="topicos">Tópicos principais:</label>
+        <textarea id="topicos" name="topicos" required></textarea>
+        <br><br>
+
+        <label for="estrategias">Estratégias de ensino:</label>
+        <textarea id="estrategias" name="estrategias" required></textarea>
+        <br><br>
+
+        <label for="recursos">Recursos didáticos (opcional):</label>
+        <textarea id="recursos" name="recursos"></textarea>
+        <br><br>
+
+        <label for="tecnologias">Tecnologias e ferramentas:</label>
+        <textarea id="tecnologias" name="tecnologias"></textarea>
+        <br><br>
+
+        <label for="infraestrutura">Infraestrutura:</label>
+        <textarea id="infraestrutura" name="infraestrutura"></textarea>
+        <br><br>
+
         <label for="email">E-mail para envio:</label>
         <input type="email" id="email" name="email" required>
         <br><br>
+
         <button type="submit">Enviar</button>
     </form>
     
@@ -21,16 +81,26 @@
         document.getElementById('planoForm').addEventListener('submit', function(event) {
             event.preventDefault();
             
-            const solicitacao = document.getElementById('solicitacao').value;
-            const email = document.getElementById('email').value;
+            const formData = {
+                disciplina: document.getElementById('disciplina').value,
+                ano: document.getElementById('ano').value,
+                segmento: document.getElementById('segmento').value,
+                nivel: document.getElementById('nivel').value,
+                quantidade: document.getElementById('quantidade').value,
+                carga: document.getElementById('carga').value,
+                formato: document.getElementById('formato').value,
+                topicos: document.getElementById('topicos').value,
+                estrategias: document.getElementById('estrategias').value,
+                recursos: document.getElementById('recursos').value,
+                tecnologias: document.getElementById('tecnologias').value,
+                infraestrutura: document.getElementById('infraestrutura').value,
+                email: document.getElementById('email').value
+            };
             
             fetch('https://webhook.expertautomacoes.com.br/webhook/0424c575-3d87-4cdf-b02d-d8f557538a25', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    mensagem: solicitacao,
-                    email: email
-                })
+                body: JSON.stringify(formData)
             })
             .then(response => response.json())
             .then(data => alert('Solicitação enviada com sucesso!'))
